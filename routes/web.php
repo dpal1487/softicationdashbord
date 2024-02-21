@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
@@ -64,8 +65,11 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('home', [HomeController::class, 'index'])->name('admin.home');
     Route::view('about', 'about')->name('admin.about');
 
+   Route::resource('blog',BlogController::class);
+
     Route::get('contacts', [ContactController::class, 'get'])->name('admin.contacts.index');
 
     Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('admin.profile.show');
     Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('admin.profile.update');
 });
+
