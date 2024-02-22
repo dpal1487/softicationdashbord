@@ -65,11 +65,17 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('home', [HomeController::class, 'index'])->name('admin.home');
     Route::view('about', 'about')->name('admin.about');
 
-   Route::resource('blog',BlogController::class);
+    Route::controller(BlogController::class)->group(function () {
+        Route::get('blog', 'index')->name('admin.blog.index');
+        Route::get('blog/create', 'create')->name('admin.blog.create');
+        Route::post('blog/store', 'store')->name('admin.blog.store');
+        Route::get('blog/{id}/edit', 'edit')->name('admin.blog.edit');
+        Route::put('blog/{id}/update', 'update')->name('admin.blog.update');
+        Route::delete('blog/{id}', 'destroy')->name('admin.blog.destroy');
+    });
 
     Route::get('contacts', [ContactController::class, 'get'])->name('admin.contacts.index');
 
     Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('admin.profile.show');
     Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('admin.profile.update');
 });
-
